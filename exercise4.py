@@ -8,7 +8,7 @@ def connect():
             host="localhost",
             database="Deneme",
             user="postgres",
-            password="Metehan")
+            password="****")
             
         # create a cursor
         cur = conn.cursor()
