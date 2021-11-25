@@ -1,0 +1,74 @@
+BEGIN;# IMPORTED ERD TABLE 
+
+
+CREATE TABLE IF NOT EXISTS public.customers
+(
+    customer_id integer NOT NULL,
+    product integer,
+    name text,
+    address text,
+    PRIMARY KEY (customer_id)
+);
+
+CREATE TABLE IF NOT EXISTS public.domains
+(
+    domain text NOT NULL,
+    customer integer,
+    PRIMARY KEY (domain)
+);
+
+CREATE TABLE IF NOT EXISTS public.team
+(
+    team_id integer NOT NULL,
+    product_id integer,
+    PRIMARY KEY (team_id)
+);
+
+CREATE TABLE IF NOT EXISTS public.product
+(
+    product_id integer NOT NULL,
+    product_name text,
+    PRIMARY KEY (product_id)
+);
+
+CREATE TABLE IF NOT EXISTS public.members
+(
+    title text NOT NULL,
+    name text,
+    address text,
+    team integer NOT NULL,
+    PRIMARY KEY (title)
+);
+
+ALTER TABLE IF EXISTS public.customers
+    ADD FOREIGN KEY (product)
+    REFERENCES public.product (product_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.domains
+    ADD FOREIGN KEY (customer)
+    REFERENCES public.customers (customer_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.team
+    ADD FOREIGN KEY (product_id)
+    REFERENCES public.product (product_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.members
+    ADD FOREIGN KEY (team)
+    REFERENCES public.team (team_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+END;
